@@ -31,7 +31,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeResponseDTO findbyId(String id) {
+    public EmployeeResponseDTO findById(String id) {
         Employee employee = employeeRepository.findById(UUID.fromString(id))
                 .orElseThrow(() -> new EmployeeNotFoundException("Employee Not Found", NOT_FOUND));
 

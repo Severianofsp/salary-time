@@ -1,6 +1,7 @@
 package br.com.instivo.salarytime.model.dto;
 
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,9 @@ public class EmployeeRequestDTO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 8016415132600200219L;
+
+    @NotBlank(message = "Name is required.")
+    private String name;
 
     @NotNull(message = "Admission date is required.")
     @PastOrPresent(message = "Admission date must be today or in the past.")
