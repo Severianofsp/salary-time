@@ -25,7 +25,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
 
     @Override
-    public PageDto<EmployeeResponseDTO> findall(Pageable pageable) {
+    public PageDto<EmployeeResponseDTO> findAll(Pageable pageable) {
         Page<Employee> employees = employeeRepository.findAll(pageable);
         return employeeFactory.buildEmployeeResponsePageDto(employees);
     }

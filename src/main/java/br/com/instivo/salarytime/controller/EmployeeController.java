@@ -17,13 +17,14 @@ import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/employees")
 public class EmployeeController implements EmployeeSwagger {
 
     private final EmployeeService employeeService;
 
     @GetMapping
     public ResponseEntity<PageDto<EmployeeResponseDTO>> findAll(@Parameter @PageableDefault(size = 20) Pageable pageable) {
-        PageDto<EmployeeResponseDTO> employeeResponseDTOS = employeeService.findall(pageable);
+        PageDto<EmployeeResponseDTO> employeeResponseDTOS = employeeService.findAll(pageable);
         return new ResponseEntity<>(employeeResponseDTOS, OK);
     }
 

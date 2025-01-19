@@ -31,6 +31,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	// Spring Boot Validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.3'
+
 	// Lombook
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

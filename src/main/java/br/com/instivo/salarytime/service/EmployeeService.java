@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface EmployeeService {
 
-    PageDto<EmployeeResponseDTO> findall(Pageable pageable);
+    PageDto<EmployeeResponseDTO> findAll(Pageable pageable);
 
     EmployeeResponseDTO findById(String id);
 
