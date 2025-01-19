@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: SalaryTime
+  data:
+    mongodb:
+      authentication-database: admin
+      uri: mongodb+srv://${DATASOURCE_USERNAME:salary-time}:${DATASOURCE_PASSWORD}@${DATASOURCE_HOST:localhost}/?retryWrites=true&w=majority&appName=Cluster0
+      database: salary-time-db
