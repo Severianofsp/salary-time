@@ -9,7 +9,7 @@ public interface EmployeeService {
 
     PageDto<EmployeeResponseDTO> findall(Pageable pageable);
 
-    EmployeeResponseDTO findbyId(String id);
+    EmployeeResponseDTO findById(String id);
 
     void save(EmployeeRequestDTO employeeRequestDTO);
 }

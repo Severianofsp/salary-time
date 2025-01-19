@@ -1,5 +1,6 @@
 package br.com.instivo.salarytime.controller.swagger;
 
+import br.com.instivo.salarytime.model.dto.EmployeeRequestDTO;
 import br.com.instivo.salarytime.model.dto.EmployeeResponseDTO;
 import br.com.instivo.salarytime.model.dto.PageDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,5 +39,45 @@ public interface EmployeeSwagger {
                             content = @Content(schema = @Schema(implementation = ErrorResponse.class))
                     )})
     ResponseEntity<PageDto<EmployeeResponseDTO>> findAll(Pageable pageable);
+
+    @Operation(
+            summary = "Retrieve employee by id",
+            description = "This endpoint return an employee, including details such as admission date, gross salary, percentage calculation, and time passed since admission.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Employee retrieved successfully.",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = EmployeeResponseDTO.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Invalid request. Check query parameters.",
+                            content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal server error.",
+                            content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+                    )})
+    ResponseEntity<EmployeeResponseDTO> findById(String id);
+
+    @Operation(summary = "Register a new employee", description = "Register a new employee by providing their details.",
+            responses = {
+                    @ApiResponse(responseCode = "201",
+                            description = "Employee successfully registered"),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Invalid request. Check query parameters.",
+                            content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal server error.",
+                            content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+                    )})
+    ResponseEntity<Void> register(EmployeeRequestDTO employeeRequestDTO);
 }
 
