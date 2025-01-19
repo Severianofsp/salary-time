@@ -65,6 +65,7 @@ Example:
   "path": "/api/v1/employees",
   "errors": [
     {
+      "name": "John Doe"
       "fieldName": "grossSalary",
       "message": "must be greater than 0"
     }
