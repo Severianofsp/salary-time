@@ -1,0 +1,39 @@
+version: '3.1'
+services:
+  salary-time-backend:
+    depends_on:
+      db:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      DATASOURCE_URL: db
+      DATASOURCE_HOST:
+      DATASOURCE_PORT: 27017
+      DATASOURCE_USERNAME: salary-time
+      DATASOURCE_PASSWORD: P8X92416
+  db:
+    image: mongo:6.0
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: salary-time-db
+      MONGO_INITDB_ROOT_USERNAME: salary-time
+      MONGO_INITDB_ROOT_PASSWORD: P8X92416
+    ports:
+      - "27017:27017"
+    volumes:
+      - db:/data/db
+    healthcheck:
+      test: >
+        mongo salary-time-db --eval 'db.runCommand("ping").ok' &&
+        test $? -eq 0
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db:
