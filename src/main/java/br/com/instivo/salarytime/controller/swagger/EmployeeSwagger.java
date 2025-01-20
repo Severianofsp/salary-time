@@ -1,5 +1,7 @@
 package br.com.instivo.salarytime.controller.swagger;
 
+import br.com.instivo.salarytime.exception.ErrorResponse;
+import br.com.instivo.salarytime.model.dto.EmployeeFilterDTO;
 import br.com.instivo.salarytime.model.dto.EmployeeRequestDTO;
 import br.com.instivo.salarytime.model.dto.EmployeeResponseDTO;
 import br.com.instivo.salarytime.model.dto.PageDto;
@@ -11,7 +13,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.ErrorResponse;
 
 @Tag(name = "Employee Controller", description = "Endpoints for managing employees.")
 public interface EmployeeSwagger {
@@ -38,7 +39,7 @@ public interface EmployeeSwagger {
                             description = "Internal server error.",
                             content = @Content(schema = @Schema(implementation = ErrorResponse.class))
                     )})
-    ResponseEntity<PageDto<EmployeeResponseDTO>> findAll(Pageable pageable);
+    ResponseEntity<PageDto<EmployeeResponseDTO>> findAll(EmployeeFilterDTO employeeFilterDto, Pageable pageable);
 
     @Operation(
             summary = "Retrieve employee by id",
@@ -75,8 +76,7 @@ public interface EmployeeSwagger {
                     ),
                     @ApiResponse(
                             responseCode = "500",
-                            description = "Internal server error.",
-                            content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+                            description = "Internal server error."
                     )})
     ResponseEntity<Void> register(EmployeeRequestDTO employeeRequestDTO);
 }

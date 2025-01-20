@@ -1,11 +1,13 @@
 package br.com.instivo.salarytime.controller;
 
 import br.com.instivo.salarytime.controller.swagger.EmployeeSwagger;
+import br.com.instivo.salarytime.model.dto.EmployeeFilterDTO;
 import br.com.instivo.salarytime.model.dto.EmployeeRequestDTO;
 import br.com.instivo.salarytime.model.dto.EmployeeResponseDTO;
 import br.com.instivo.salarytime.model.dto.PageDto;
 import br.com.instivo.salarytime.service.EmployeeService;
 import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -17,13 +19,15 @@ import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/employee")
 public class EmployeeController implements EmployeeSwagger {
 
     private final EmployeeService employeeService;
 
     @GetMapping
-    public ResponseEntity<PageDto<EmployeeResponseDTO>> findAll(@Parameter @PageableDefault(size = 20) Pageable pageable) {
-        PageDto<EmployeeResponseDTO> employeeResponseDTOS = employeeService.findall(pageable);
+    public ResponseEntity<PageDto<EmployeeResponseDTO>> findAll(EmployeeFilterDTO filter,
+                                                                @Parameter @PageableDefault(size = 20) Pageable pageable) {
+        PageDto<EmployeeResponseDTO> employeeResponseDTOS = employeeService.findAll(filter, pageable);
         return new ResponseEntity<>(employeeResponseDTOS, OK);
     }
 
@@ -34,7 +38,7 @@ public class EmployeeController implements EmployeeSwagger {
     }
 
     @PostMapping
-    public ResponseEntity<Void> register(@RequestBody EmployeeRequestDTO employeeRequestDTO) {
+    public ResponseEntity<Void> register(@Valid @RequestBody EmployeeRequestDTO employeeRequestDTO) {
         employeeService.save(employeeRequestDTO);
         return new ResponseEntity<>(CREATED);
     }

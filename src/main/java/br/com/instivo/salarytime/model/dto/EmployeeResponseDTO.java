@@ -6,10 +6,13 @@ import lombok.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @Builder
+@ToString
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "Detailed representation of an employee.")
@@ -17,6 +20,15 @@ public class EmployeeResponseDTO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 6876807542360424104L;
+
+    @Schema(description = "Name employee's admission.", example = "John DOe")
+    private String name;
+
+    @Schema(description = "Date employee's admission.", example = "2024-01-20")
+    private LocalDate admissionDate;
+
+    @Schema(description = "Id employee's admission.", example = "678d5e34289a8d083c70d4c5")
+    private String id;
 
     @Schema(description = "Years passed since the employee's admission.", example = "3")
     private int yearsPassed;

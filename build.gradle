@@ -31,14 +31,22 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	// Spring Boot Validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.3'
+
 	// Lombook
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
 	// Swagger
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
 
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	testImplementation 'org.testcontainers:testcontainers:1.18.3'
+	testImplementation 'org.testcontainers:mongodb:1.18.3'
 }
 
 tasks.named('test') {
