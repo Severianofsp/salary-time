@@ -1,10 +1,7 @@
 package br.com.instivo.salarytime.model.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.io.Serial;
@@ -25,6 +22,7 @@ public class EmployeeRequestDTO implements Serializable {
     private static final long serialVersionUID = 8016415132600200219L;
 
     @NotBlank(message = "Name is required.")
+    @Size(max = 150, message = "Name must not exceed 150 characters.")
     private String name;
 
     @NotNull(message = "Admission date is required.")
