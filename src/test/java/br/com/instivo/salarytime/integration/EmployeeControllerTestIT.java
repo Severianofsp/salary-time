@@ -57,7 +57,7 @@ public class EmployeeControllerTestIT {
         when(employeeService.findAll(any(), any())).thenReturn(pageDto);
 
         // Action & Result
-        mockMvc.perform(get("/api/employee")
+        mockMvc.perform(get("/api/v1/employees")
                         .param("page", "0")
                         .param("size", "20")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -74,7 +74,7 @@ public class EmployeeControllerTestIT {
         when(employeeService.findById(id)).thenReturn(employeeResponseDTO);
 
         // Action & Result
-        mockMvc.perform(get("/api/employee/{id}", id)
+        mockMvc.perform(get("/api/v1/employees/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").doesNotExist());
@@ -86,7 +86,7 @@ public class EmployeeControllerTestIT {
         EmployeeRequestDTO employeeRequestDTO = buildEmployeeRequestDTODefault().build();
 
         // Action & Result
-        mockMvc.perform(post("/api/employee")
+        mockMvc.perform(post("/api/v1/employees")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(writeValueAsString(employeeRequestDTO)))
                 .andExpect(status().isCreated());
@@ -95,7 +95,7 @@ public class EmployeeControllerTestIT {
     @Test
     void register_shouldReturnErrorResponse() throws Exception {
         // Action & Result
-        mockMvc.perform(post("/api/employee")
+        mockMvc.perform(post("/api/v1/employees")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(writeValueAsString(new EmployeeRequestDTO())))
                 .andDo(print())
