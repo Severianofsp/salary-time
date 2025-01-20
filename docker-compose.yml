@@ -11,8 +11,8 @@ services:
     ports:
       - "8080:8080"
     environment:
-      DATASOURCE_URL: db
-      DATASOURCE_HOST:
+      ENV_DEVELOPMENT: LOCAL
+      DATASOURCE_HOST: db
       DATASOURCE_PORT: 27017
       DATASOURCE_USERNAME: salary-time
       DATASOURCE_PASSWORD: P8X92416
@@ -29,10 +29,8 @@ services:
     volumes:
       - db:/data/db
     healthcheck:
-      test: >
-        mongo salary-time-db --eval 'db.runCommand("ping").ok' &&
-        test $? -eq 0
-      interval: 10s
+      test: [ "CMD", "mongosh", "--eval", "db.runCommand('ping').ok" ]
+      interval: 30s
       timeout: 5s
       retries: 5
 

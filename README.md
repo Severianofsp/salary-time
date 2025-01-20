@@ -14,64 +14,145 @@ This project is a robust Employee Management API developed using **Spring Boot**
 
 ---
 
-## Endpoints
+# Documentação e Testes da API
 
-### **Employee Endpoints**
+## Endpoints Disponíveis
 
-#### **Retrieve All Employees (Paginated)**
-**GET** `/api/v1/employees`
+### 1. Buscar Todos os Funcionários
 
-- **Query Parameters**:
-    - `page` (optional, default: 0): Page number.
-    - `size` (optional, default: 10): Number of records per page.
-    - `sort` (optional): Sorting field and direction, e.g., `admissionDate,desc`.
+- **URL**: `/api/employees`
+- **Método HTTP**: `GET`
+- **Descrição**: Retorna uma página de funcionários com base nos filtros fornecidos.
 
-- **Responses**:
-    - **200 OK**: Returns a paginated list of employees.
-    - **400 Bad Request**: Invalid parameters with an `ErrorResponse` body.
+**Parâmetros de Query**:
 
-#### **Create Employee**
-**POST** `/api/v1/employees`
+- `page` (opcional): Número da página. Default: `0`.
+- `size` (opcional): Tamanho da página. Default: `20`.
 
-- **Request Body**:
-  ```json
-  {
-    "admissionDate": "2023-01-15",
-    "grossSalary": 5000.00
-  }
-  ```
-- **Responses**:
-    - **201 Created**: Employee successfully created.
-    - **400 Bad Request**: Invalid input data.
+**Exemplo de Requisição com Curl**:
 
----
+```bash
+curl -X GET "http://localhost:8080/api/employees?page=0&size=10" \
+-H "Accept: application/json"
+```
 
-### **Error Responses**
-**Model: `ErrorResponse`**
+**Resposta Esperada (JSON)**:
 
-- **Fields**:
-    - `code`: HTTP status code.
-    - `status`: Status text.
-    - `message`: Detailed error description.
-    - `path`: API path that caused the error.
-    - `errors`: List of field-specific validation errors.
-
-Example:
 ```json
 {
-  "code": 400,
-  "status": "Bad Request",
-  "message": "Invalid request parameters.",
-  "path": "/api/v1/employees",
-  "errors": [
+  "content": [
     {
-      "fieldName": "grossSalary",
-      "message": "must be greater than 0"
+      "id": "123",
+      "name": "John Doe",
+      "yearsPassed": 1,
+      "monthsPassed": 2,
+      "daysPassed": 15,
+      "grossSalary": 5000.00,
+      "calculatedPercentage": 1750.00
     }
-  ]
+  ],
+  "totalPages": 1,
+  "currentPageNumber": 0,
+  "numberOfElements": 10,
+  "totalElements": 10
 }
 ```
 
+---
+
+### 2. Buscar Funcionário por ID
+
+- **URL**: `/api/employees/{id}`
+- **Método HTTP**: `GET`
+- **Descrição**: Retorna os detalhes de um funcionário com base no ID fornecido.
+
+**Parâmetro de Path**:
+
+- `id` (obrigatório): ID do funcionário a ser buscado.
+
+**Exemplo de Requisição com Curl**:
+
+```bash
+curl -X GET "http://localhost:8080/api/employees/123" \
+-H "Accept: application/json"
+```
+
+**Resposta Esperada (JSON)**:
+
+```json
+{
+  "id": "123",
+  "name": "John Doe",
+  "yearsPassed": 1,
+  "monthsPassed": 2,
+  "daysPassed": 15,
+  "grossSalary": 5000.00,
+  "calculatedPercentage": 1750.00
+}
+```
+
+**Possíveis Erros**:
+
+- Se o ID não existir, retorna:
+    - **Status**: `404 Not Found`
+    - **Body**:
+      ```json
+      {
+        "error": "Employee Not Found"
+      }
+      ```
+
+---
+
+### 3. Registrar Novo Funcionário
+
+- **URL**: `/api/employees`
+- **Método HTTP**: `POST`
+- **Descrição**: Registra um novo funcionário no sistema.
+
+**Body da Requisição (JSON)**:
+
+```json
+{
+  "name": "John Doe",
+  "admissionDate": "2023-01-15",
+  "grossSalary": 5000.00
+}
+```
+
+**Exemplo de Requisição com Curl**:
+
+```bash
+curl -X POST "http://localhost:8080/api/employees" \
+-H "Content-Type: application/json" \
+-H "Accept: application/json" \
+-d '{
+  "name": "John Doe",
+  "admissionDate": "2023-01-15",
+  "grossSalary": 5000.00
+}'
+```
+
+**Resposta Esperada**:
+
+- **Status**: `201 Created`
+- **Body**: (vazio)
+
+**Validações**:
+
+- Caso o body contenha campos inválidos, retorna:
+    - **Status**: `400 Bad Request`
+    - **Body**:
+      ```json
+      {
+        "errors": [
+          {
+            "field": "name",
+            "message": "Name is required"
+          }
+        ]
+      }
+      ```
 ---
 
 ## Technologies Used
@@ -79,7 +160,7 @@ Example:
 - **Backend**: Spring Boot
 - **Database**: MongoDB
 - **Documentation**: Springdoc OpenAPI (Swagger UI)
-- **Build Tool**: Maven
+- **Build Tool**: Gradle
 - **Java Version**: 17
 - **Containerization**: Docker, Docker Compose
 

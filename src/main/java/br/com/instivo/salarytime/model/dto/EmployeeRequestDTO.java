@@ -1,12 +1,11 @@
 package br.com.instivo.salarytime.model.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -14,8 +13,12 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
+@Builder
+@ToString
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(description = "Request of an employee.")
 public class EmployeeRequestDTO implements Serializable {
 
     @Serial

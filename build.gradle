@@ -41,9 +41,12 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 
 	// Swagger
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
 
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	testImplementation 'org.testcontainers:testcontainers:1.18.3'
+	testImplementation 'org.testcontainers:mongodb:1.18.3'
 }
 
 tasks.named('test') {
