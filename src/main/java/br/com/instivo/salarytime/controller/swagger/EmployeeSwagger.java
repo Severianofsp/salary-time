@@ -36,9 +36,7 @@ public interface EmployeeSwagger {
                     ),
                     @ApiResponse(
                             responseCode = "500",
-                            description = "Internal server error.",
-                            content = @Content(schema = @Schema(implementation = ErrorResponse.class))
-                    )})
+                            description = "Internal server error.")})
     ResponseEntity<PageDto<EmployeeResponseDTO>> findAll(EmployeeFilterDTO employeeFilterDto, Pageable pageable);
 
     @Operation(
@@ -60,8 +58,7 @@ public interface EmployeeSwagger {
                     ),
                     @ApiResponse(
                             responseCode = "500",
-                            description = "Internal server error.",
-                            content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+                            description = "Internal server error."
                     )})
     ResponseEntity<EmployeeResponseDTO> findById(String id);
 
