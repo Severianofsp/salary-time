@@ -14,29 +14,37 @@ This project is a robust Employee Management API developed using **Spring Boot**
 
 ---
 
-# Documentação e Testes da API
+# API Documentation and Testing
 
-## Endpoints Disponíveis
+## Available Endpoints
 
-### 1. Buscar Todos os Funcionários
+---
+
+### 1. Get All Employees
 
 - **URL**: `/api/employees`
-- **Método HTTP**: `GET`
-- **Descrição**: Retorna uma página de funcionários com base nos filtros fornecidos.
+- **HTTP Method**: `GET`
+- **Description**: Returns a page of employees based on the provided filters.
 
-**Parâmetros de Query**:
+**Query Parameters**:
 
-- `page` (opcional): Número da página. Default: `0`.
-- `size` (opcional): Tamanho da página. Default: `20`.
+- `name` (optional): Name employee's admission,
+- `startAdmissionPeriodDate` (optional): Start date for the admission period filter.
+- `endAdmissionPeriodDate` (optional): End date for the admission period filter.
+- `grossSalaryGreaterThan` (optional): Minimum gross salary for filtering.
+- `grossSalaryLessThan` (optional): Maximum gross salary for filtering.
+- `page` (optional): Page number. Default: `0`.
+- `size` (optional): Page size. Default: `20`.
 
-**Exemplo de Requisição com Curl**:
+**Curl Request Example**:
 
 ```bash
-curl -X GET "http://localhost:8080/api/employees?page=0&size=10" \
--H "Accept: application/json"
-```
+curl -X 'GET' \
+  'http://localhost:8080/api/v1/employees?name=John%20Doe&startAdmissionPeriodDate=2023-01-01&endAdmissionPeriodDate=2023-12-31&grossSalaryGreaterThan=3000&grossSalaryLessThan=10000&page=0&size=1' \
+  -H 'accept: application/json'
+```  
 
-**Resposta Esperada (JSON)**:
+**Expected Response (JSON)**:
 
 ```json
 {
@@ -56,28 +64,28 @@ curl -X GET "http://localhost:8080/api/employees?page=0&size=10" \
   "numberOfElements": 10,
   "totalElements": 10
 }
-```
+```  
 
 ---
 
-### 2. Buscar Funcionário por ID
+### 2. Get Employee by ID
 
-- **URL**: `/api/employees/{id}`
-- **Método HTTP**: `GET`
-- **Descrição**: Retorna os detalhes de um funcionário com base no ID fornecido.
+- **URL**: `/api/v1/employees/{id}`
+- **HTTP Method**: `GET`
+- **Description**: Returns the details of an employee based on the provided ID.
 
-**Parâmetro de Path**:
+**Path Parameter**:
 
-- `id` (obrigatório): ID do funcionário a ser buscado.
+- `id` (required): The ID of the employee to fetch.
 
-**Exemplo de Requisição com Curl**:
+**Curl Request Example**:
 
 ```bash
-curl -X GET "http://localhost:8080/api/employees/123" \
+curl -X GET "http://localhost:8080/api/v1/employees/123" \  
 -H "Accept: application/json"
-```
+```  
 
-**Resposta Esperada (JSON)**:
+**Expected Response (JSON)**:
 
 ```json
 {
@@ -89,28 +97,32 @@ curl -X GET "http://localhost:8080/api/employees/123" \
   "grossSalary": 5000.00,
   "calculatedPercentage": 1750.00
 }
-```
+```  
 
-**Possíveis Erros**:
+**Possible Errors**:
 
-- Se o ID não existir, retorna:
+- If the ID does not exist, the response will be:
     - **Status**: `404 Not Found`
     - **Body**:
       ```json
-      {
-        "error": "Employee Not Found"
-      }
-      ```
+        {
+          "code": 404,
+          "status": "Not Found",
+          "message": "Employee Not Found",
+          "path": "/api/v1/employees",
+          "errors": []
+        }
+      ```  
 
 ---
 
-### 3. Registrar Novo Funcionário
+### 3. Register a New Employee
 
-- **URL**: `/api/employees`
-- **Método HTTP**: `POST`
-- **Descrição**: Registra um novo funcionário no sistema.
+- **URL**: `/api/v1/employees`
+- **HTTP Method**: `POST`
+- **Description**: Registers a new employee in the system.
 
-**Body da Requisição (JSON)**:
+**Request Body (JSON)**:
 
 ```json
 {
@@ -118,40 +130,44 @@ curl -X GET "http://localhost:8080/api/employees/123" \
   "admissionDate": "2023-01-15",
   "grossSalary": 5000.00
 }
-```
+```  
 
-**Exemplo de Requisição com Curl**:
+**Curl Request Example**:
 
 ```bash
-curl -X POST "http://localhost:8080/api/employees" \
--H "Content-Type: application/json" \
--H "Accept: application/json" \
+curl -X POST "http://localhost:8080/api/v1/employees" \  
+-H "Content-Type: application/json" \  
+-H "Accept: application/json" \  
 -d '{
   "name": "John Doe",
   "admissionDate": "2023-01-15",
   "grossSalary": 5000.00
 }'
-```
+```  
 
-**Resposta Esperada**:
+**Expected Response**:
 
 - **Status**: `201 Created`
-- **Body**: (vazio)
+- **Body**: *(empty)*
 
-**Validações**:
+**Validations**:
 
-- Caso o body contenha campos inválidos, retorna:
+- If the request body contains invalid fields, the response will be:
     - **Status**: `400 Bad Request`
     - **Body**:
       ```json
-      {
-        "errors": [
-          {
-            "field": "name",
-            "message": "Name is required"
-          }
-        ]
-      }
+        {
+          "code": 400,
+          "status": "Bad Request",
+          "message": "Invalid request parameters.",
+          "path": "/api/v1/employees",
+          "errors": [
+            {
+              "fieldName": "admissionDate",
+              "message": "Admission date must be today or in the past."
+            }
+          ]
+        }
       ```
 ---
 

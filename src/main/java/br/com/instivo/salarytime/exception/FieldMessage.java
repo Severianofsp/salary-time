@@ -17,9 +17,9 @@ public class FieldMessage implements Serializable {
     @Serial
     private static final long serialVersionUID = 4274898168763744870L;
 
-    @Schema(description = "Name of the field that caused the validation error.", example = "admissionDate")
+    @Schema(description = "Name of the field that caused the validation error.", example = "field")
     private String fieldName;
 
-    @Schema(description = "Error message describing the issue with the field.", example = "Admission date must be today or in the past.")
+    @Schema(description = "Error message describing the issue with the field.", example = "message")
     private String message;
 }

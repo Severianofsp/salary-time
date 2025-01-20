@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
                         .build())
                 .collect(Collectors.toList());
 
-        ErrorResponse errorResponse = buildErrorResponse(request, httpStatus, httpStatus.name(), fieldMessageStream);
+        ErrorResponse errorResponse = buildErrorResponse(request, httpStatus, "Invalid request parameters.", fieldMessageStream);
 
         return ResponseEntity.status(httpStatus).contentType(APPLICATION_JSON).body(errorResponse);
     }
