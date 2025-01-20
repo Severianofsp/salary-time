@@ -19,7 +19,7 @@ import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/employee")
+@RequestMapping("/api/v1/employees")
 public class EmployeeController implements EmployeeSwagger {
 
     private final EmployeeService employeeService;

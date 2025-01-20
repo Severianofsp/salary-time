@@ -4,6 +4,7 @@ import br.com.instivo.salarytime.model.dto.EmployeeResponseDTO;
 import br.com.instivo.salarytime.model.dto.PageDto;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 public class EmployeeResponseDTOBuilder {
@@ -14,6 +15,8 @@ public class EmployeeResponseDTOBuilder {
         EmployeeResponseDTOBuilder builder = new EmployeeResponseDTOBuilder();
         builder.employeeResponseDTO = EmployeeResponseDTO.builder()
                 .id("6ccaafd2e95b90f6baaa3f9e")
+                .name("John")
+                .admissionDate(LocalDate.now())
                 .yearsPassed(0)
                 .monthsPassed(0)
                 .daysPassed(0)

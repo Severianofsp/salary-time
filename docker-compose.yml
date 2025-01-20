@@ -16,6 +16,7 @@ services:
       DATASOURCE_PORT: 27017
       DATASOURCE_USERNAME: salary-time
       DATASOURCE_PASSWORD: P8X92416
+      ENV_DEVELOPMENT: LOCAL
   db:
     image: mongo:6.0
     restart: unless-stopped

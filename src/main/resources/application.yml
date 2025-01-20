@@ -11,3 +11,6 @@ spring:
       database: salary-time-db
       username: ${DATASOURCE_USERNAME:salary-time}
       password: ${DATASOURCE_PASSWORD}
+
+api:
+  host: ${API_HOST:http://localhost:8080}
